@@ -1,0 +1,25 @@
+body, ul, li
+{
+  margin:0; padding:0;
+}
+ul
+{
+  list-style:none;
+}
+img
+{
+  display:block; max-width:100%;
+}
+.slide-wrapper
+{
+  overflow:hidden;
+}
+.slide
+{
+  display:flex;
+}
+.slide li
+{
+  flex-shrink:0; max-width:800px; margin:10px 10px; border-radius:5px;
+  box-shadow:0px 0px 10px rgba(0, 0, 0, 0.80); overflow:hidden;
+}
