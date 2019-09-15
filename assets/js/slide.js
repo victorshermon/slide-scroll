@@ -58,7 +58,39 @@ export class slideNav {
     this.onMove = this.onMove.bind(this);
   }
 
+  /* Slide Configs */
+
+  slidePosition(slide) {
+    const margin = (this.wrapper.offsetWidth - slide.offsetWidth) / 2;
+    return -(slide.offsetLeft - margin);
+  }
+
+  slideConfig() {
+    this.slideArray = [...this.slide.children].map((element) => {
+      const position = this.slidePosition(element);
+      return {position, element}
+    });
+    console.log(this.slideArray);
+  }
+
+  slideIndexNav(index) {
+    const last = this.slideArray.length;
+    this.index = {
+      prev:index ? index - 1 : undefined,
+      active:index,
+      next:(index === (last -1) ) ? undefined : index + 1,
+    }
+  }
+
+  changedSlide(index) {
+    const activeSlide = this.slideArray[index];
+   this.moveSlide(activeSlide.position);
+   this.slideIndexNav(index);
+   this.dist.finalPosition = activeSlide.position;
+  }
+
   init() {
+    this.slideConfig();
     this.bind();
     this.addEventsList();
   }
