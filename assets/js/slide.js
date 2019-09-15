@@ -83,7 +83,7 @@ export class slideNav {
   }
 
   changedSlide(index) {
-    const activeSlide = this.slideArray[index];
+   const activeSlide = this.slideArray[index];
    this.moveSlide(activeSlide.position);
    this.slideIndexNav(index);
    this.dist.finalPosition = activeSlide.position;
