@@ -26,9 +26,6 @@ export class slideNav {
       this.dist.startX = event.changedTouches[0].clientX;
       movetype = 'touchmove';
     }
-
-    console.log(event.type);
-
     this.wrapper.addEventListener(movetype, this.onMove);
   }
 
@@ -42,17 +39,7 @@ export class slideNav {
     const movetype = (event.type === 'mouseup') ? 'mousemove' : 'touchmove';
    this.wrapper.removeEventListener(movetype, this.onMove);
    this.dist.finalPosition = this.dist.movePosition;
-   this.changedSlideOnEnd();
-  }
 
-  changedSlideOnEnd() {
-    if(this.dist.movement > 120) {
-      this.activeNextSlide();
-    } else if(this.dist.movement < -120) {
-      this.activePrevSlide();
-    } else {
-      this.changedSlide(this.index.active);
-    }
   }
 
 
@@ -100,15 +87,7 @@ export class slideNav {
    this.dist.finalPosition = activeSlide.position;
   }
 
-  activePrevSlide() {
-    if(this.index.prev !== undefined) this.changedSlide(this.index.prev);
-  }
-  activeNextSlide() {
-    if(this.index.next !== undefined){
-      this.changedSlide(this.index.next);
-    }
 
-  }
 
   init() {
     this.slideConfig();
