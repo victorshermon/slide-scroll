@@ -42,6 +42,17 @@ export class slideNav {
     const movetype = (event.type === 'mouseup') ? 'mousemove' : 'touchmove';
    this.wrapper.removeEventListener(movetype, this.onMove);
    this.dist.finalPosition = this.dist.movePosition;
+   this.changedSlideOnEnd();
+  }
+
+  changedSlideOnEnd() {
+    if(this.dist.movement > 120) {
+      this.activeNextSlide();
+    } else if(this.dist.movement < -120) {
+      this.activePrevSlide();
+    } else {
+      this.changedSlide(this.index.active);
+    }
   }
 
 
@@ -87,6 +98,16 @@ export class slideNav {
    this.moveSlide(activeSlide.position);
    this.slideIndexNav(index);
    this.dist.finalPosition = activeSlide.position;
+  }
+
+  activePrevSlide() {
+    if(this.index.prev !== undefined) this.changedSlide(this.index.prev);
+  }
+  activeNextSlide() {
+    if(this.index.next !== undefined){
+      this.changedSlide(this.index.next);
+    }
+
   }
 
   init() {
