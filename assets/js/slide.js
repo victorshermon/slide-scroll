@@ -1,9 +1,11 @@
+import debounce from './debounce.js';
 export class slideNav {
 
   constructor(wrapper, slide) {
     this.wrapper = document.querySelector(wrapper);
     this.slide = document.querySelector(slide);
     this.dist = {finalPosition: 0, startX: 0, movement: 0}
+    this.activeClass = 'active';
   }
 
   transition(active) {
@@ -67,12 +69,6 @@ export class slideNav {
     this.wrapper.addEventListener('touchend', this.onEnd);
   }
 
-  bind() {
-    this.onStart = this.onStart.bind(this);
-    this.onEnd = this.onEnd.bind(this);
-    this.onMove = this.onMove.bind(this);
-  }
-
   /* Slide Configs */
 
   slidePosition(slide) {
@@ -102,6 +98,14 @@ export class slideNav {
    this.moveSlide(activeSlide.position);
    this.slideIndexNav(index);
    this.dist.finalPosition = activeSlide.position;
+   this.changeActiveClass();
+  }
+
+  changeActiveClass(){
+    this.slideArray.forEach((item) => {
+      item.element.classList.remove(this.activeClass);
+    })
+    this.slideArray[this.index.active].element.classList.add(this.activeClass);
   }
 
   activePrevSlide(){
@@ -116,11 +120,32 @@ export class slideNav {
     }
   }
 
+  onResize() {
+    setTimeout(() => {
+      this.slideConfig();
+      this.changedSlide(this.index.active);
+    }, 1000)
+
+  }
+
+  addResizeEvent() {
+    window.addEventListener('resize', this.onResize);
+  }
+
+  bind() {
+    this.onStart = this.onStart.bind(this);
+    this.onEnd = this.onEnd.bind(this);
+    this.onMove = this.onMove.bind(this);
+    this.onResize = debounce(this.onResize.bind(this), 200);
+
+  }
+
   init() {
     this.slideConfig();
     this.transition(true);
     this.bind();
     this.addEventsList();
+    this.addResizeEvent();
   }
 
 
